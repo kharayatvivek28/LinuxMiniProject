@@ -1,0 +1,52 @@
+
+1.Check if firewalld is installed by running:
+  Command:
+•	sudo systemctl status firewalld
+•	Start and enable firewalld (if necessary) with the following commands:
+  Command:
+•	sudo systemctl start firewalld
+•	sudo systemctl enable firewalld
+
+2.Open TCP Port 8000 by running:
+  Command: 
+•	sudo firewall-cmd --zone=public --add-port=8000/tcp --permanent
+•	sudo firewall-cmd --reload
+•	Verify that port 8000 is open by running:
+  Command:
+•	sudo firewall-cmd --list-ports
+
+3.Start the HTTP Server
+•	Open the Terminal on your Linux VM.
+•	Navigate to the Directory where your web files are stored.
+  Command:
+• cd /home/your_username/website_files
+•	Start the HTTP Server using Python. 
+  Run the following command to start the server on TCP port 8000:
+  Command: 
+• python3 -m http.server 8000 --bind 0.0.0.0
+
+4.Find Your VM’s IP Address
+  Command: 
+•	ip a   #(this will give you the VM’s IP Address) 
+  OR
+•	hostname -I 
+
+Public IP Address
+•	curl ifconfig.me  #(This will return your public IP address)
+
+5.Test Access Internal (Local Machine Outside VM Machine):
+• Enter the following URL in the browser’s address bar:
+• http://<vm_ip_address>:8000
+• Replace <vm_ip_address> with the VM IP Address 
+
+a.	You can run webpage inside VM using server. Enter localhost:8000 
+b.  If the setup is correct, you should see your web page served from the Linux VM.
+
+6.Test Access External (From Other Device)
+• Open a browser on device.
+• Enter the following URL in the browser’s address bar:
+• http://<vm_ip_address>:8000
+•	Replace <vm_ip_address> with the VM Public IP Address 
+
+7.Stop the Server
+ Ctrl + C.

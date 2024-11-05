@@ -1,0 +1,84 @@
+HTTP Web Server Setup Guidelines (Linux VM)
+
+Follow these steps to set up a simple HTTP web server on a Linux virtual machine (VM) using Python and configure it for external access.
+
+1.	Prepare Your Environment
+•	Linux Virtual Machine (VM): Ensure that your Linux VM is up and running, with the network set to bridged mode.
+•	Files to Host: Ensure that your web files (HTML, CSS, JavaScript, etc.) are ready in a directory on the VM.
+
+2.	Configure the Firewall to Allow Traffic on Port 8000
+
+To allow external devices to access the web server, configure the firewall to open port 8000:
+•	Check if firewalld is installed by running:
+Command:
+•	sudo systemctl status firewalld
+•	Start and enable firewalld (if necessary) with the following commands:
+Command:
+•	sudo systemctl start firewalld
+•	sudo systemctl enable firewalld
+
+•	Open TCP Port 8000 by running:
+Command: 
+•	sudo firewall-cmd --zone=public --add-port=8000/tcp --permanent
+•	sudo firewall-cmd --reload
+•	Verify that port 8000 is open by running:
+Command:
+•	sudo firewall-cmd --list-ports
+•	You should see 8000/tcp listed in the output, confirming that the port is open.
+
+3.	Get Your Public IP Address
+To access the server from an external network (e.g., using a mobile device), you’ll need the public IP address of your network. 
+Command:
+•	curl ifconfig.me
+•	This will return your public IP address.
+
+4.	Start the HTTP Server
+•	Open the Terminal on your Linux VM.
+•	Navigate to the Directory where your web files are stored. For example, if your files are located at /home/vkharayat/vivek, run the following command:
+Command: cd vivek   #(vivek is directory containing web files)
+•	Start the HTTP Server using Python. Run the following command to start the server on TCP port 8000:
+Command: python3 -m http.server 8000 --bind 0.0.0.0
+•	This starts the HTTP server on port 8000 and binds it to all available interfaces (0.0.0.0), allowing access from any device on the local network.
+
+•	Find Your VM’s IP Address
+To access the server from an external device, you need to know the IP address of your Linux VM:
+•	Run the following command to display your network information:
+Command: 
+•	ip a   #(this will give you the VM’s IP Address) 
+OR
+You can use hostname -I to get the IP Address.
+
+Public IP Address
+•	curl ifconfig.me  #(This will return your public IP address)
+
+5.	Test Access Internal (Local Machine Outside VM Machine):
+i.	Open a browser on device.
+ii.	Enter the following URL in the browser’s address bar:
+http://<vm_ip_address>:8000
+a.	Replace <vm_ip_address> with the VM IP Address 
+b.	You can retrieve Virtual IP Address using ip a OR hostname -I.
+c.	You can run webpage inside VM using server. Enter localhost:8000 
+d.  If the setup is correct, you should see your web page served from the Linux VM.
+
+6.	Test Access External (From Other Device)
+i.	Open a browser on device.
+ii.	Enter the following URL in the browser’s address bar:
+http://<vm_ip_address>:8000
+•	Replace <vm_ip_address> with the VM Public IP Address 
+•	You can retrieve Public IP Address using curl ifconfig.me
+•	Request from the other device for the HTML file using server.
+
+7.	Stop the Server
+To stop the Python HTTP server, go back to the terminal where it's running and press Ctrl + C.
+
+Summary of Steps
+•	Prepare your Linux VM and web files.
+•	Start the HTTP server using Python on port 8000.
+•	Retrieve the VM's IP address.
+•	Configure the firewall to open port 8000 using firewalld.
+•	Test external access using the public IP address.
+This procedure sets up a fully functional web server on your Linux VM, accessible from external devices through a secure configuration of firewall rules and proper port management.
+
+
+
+
